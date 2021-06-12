@@ -19,4 +19,10 @@ class Enigma
   def character_set
     ("a".."z").to_a << " "
   end
+
+  def user_input
+    input = gets.chomp.downcase
+    puts input
+    user_input
+  end
 end
