@@ -1,5 +1,6 @@
 require 'spec_helper'
-require 'keys'
+require 'key'
+require 'date'
 require 'enigma'
 
 describe Enigma do
@@ -12,6 +13,11 @@ describe Enigma do
   end
 
   it 'has attributes' do
+  end
+
+  it 'can get the date' do
+    @enigma.date.get_date
+    @enigma.date.date
   end
 
   it 'can encrypt'
