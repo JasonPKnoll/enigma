@@ -4,7 +4,7 @@ require './modules/indexable'
 class Enigma
   include Indexable
   attr_reader :message, :date, :key, :offsets, :offsets_count
-  #may or may not need :message, :date, :key
+  #may or may not need :message, :date, :key for user input
 
   def initialize
     @key = @key
@@ -80,8 +80,3 @@ class Enigma
     user_input
   end
 end
-
-# @offsets_count += 1
-# start = character_set.find_index(character)
-# finish = @offsets.final_offsets[:offset_a]
-# character_set.rotate(start).rotate(finish)[0]
