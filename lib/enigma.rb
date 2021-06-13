@@ -50,6 +50,28 @@ class Enigma
   end
 
   def decrypt(ciphertext, key, date)
+    set_offsets(key, date)
+    message_to_array = ciphertext.downcase.split('')
+    message_to_array.map do |character|
+      if character_set.include?(character)
+        unscrambling(character)
+      else
+        character
+      end
+    end.join
+  end
+
+  def unscrambling(character)
+    if @offsets_count == 0
+      unscramble(1, :offset_a, character)
+    elsif @offsets_count == 1
+      unscramble(1, :offset_b, character)
+    elsif @offsets_count == 2
+      unscramble(1, :offset_c, character)
+    else @offsets_count == 3
+      @offsets_count = 0
+      unscramble(0, :offset_d, character)
+    end
   end
 
   def user_input

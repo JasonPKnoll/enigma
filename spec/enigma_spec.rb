@@ -33,9 +33,9 @@ describe Enigma do
     expect(new_encryption).to eq("keder ohulw!")
   end
 
-  xit 'decrypt' do
-    new_decryption = @enigma.encrypt("keder ohulw!", '02715', '040895')
-    expect(new_encryption).to eq("hello world!")
+  it 'decrypt' do
+    new_decryption = @enigma.decrypt("keder ohulw!", '02715', '040895')
+    expect(new_decryption).to eq("hello world!")
   end
 
 end
