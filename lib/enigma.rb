@@ -1,6 +1,8 @@
 require './lib/offsets'
+require './modules/indexable'
 
 class Enigma
+  include Indexable
   attr_reader :message, :date, :key, :offsets
 
   def initialize
@@ -23,25 +25,29 @@ class Enigma
     message_to_array.map do |character|
       if character_set.include?(character)
         if @offsets_count == 0
-          @offsets_count += 1
-          start = character_set.find_index(character)
-          finish = @offsets.final_offsets[:offset_a]
-          character_set.rotate(start).rotate(finish)[0]
+          scramble(1, :offset_a, character)
+          # @offsets_count += 1
+          # start = character_set.find_index(character)
+          # finish = @offsets.final_offsets[:offset_a]
+          # character_set.rotate(start).rotate(finish)[0]
         elsif @offsets_count == 1
-          @offsets_count += 1
-          start = character_set.find_index(character)
-          finish = @offsets.final_offsets[:offset_b]
-          character_set.rotate(start).rotate(finish)[0]
+          scramble(1, :offset_b, character)
+          # @offsets_count += 1
+          # start = character_set.find_index(character)
+          # finish = @offsets.final_offsets[:offset_b]
+          # character_set.rotate(start).rotate(finish)[0]
         elsif @offsets_count == 2
-          @offsets_count += 1
-          start = character_set.find_index(character)
-          finish = @offsets.final_offsets[:offset_c]
-          character_set.rotate(start).rotate(finish)[0]
+          scramble(1, :offset_c, character)
+          # @offsets_count += 1
+          # start = character_set.find_index(character)
+          # finish = @offsets.final_offsets[:offset_c]
+          # character_set.rotate(start).rotate(finish)[0]
         else @offsets_count == 3
-          @offsets_count = 0
-          start = character_set.find_index(character)
-          finish = @offsets.final_offsets[:offset_d]
-          character_set.rotate(start).rotate(finish)[0]
+          scramble(0, :offset_d, character)
+          # @offsets_count = 0
+          # start = character_set.find_index(character)
+          # finish = @offsets.final_offsets[:offset_d]
+          # character_set.rotate(start).rotate(finish)[0]
         end
       else
         character
