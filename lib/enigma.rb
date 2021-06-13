@@ -1,40 +1,52 @@
-require './lib/key'
-require './lib/date'
+require './lib/offsets'
 
 class Enigma
   attr_reader :message, :date, :key, :offsets
 
   def initialize
-    @key = Key.new
-    @date = Date.new
+    @key = @key
+    @date = @date
     @message = message
     @offsets = offsets
     @offsets_count = 0
   end
 
-  def final_offsets(key, date)
-    @offsets = Offsets(key, date)
-    offset_a =
+  def set_offsets(key, date)
+    @offsets = Offsets.new(key, date)
+    offsets.set_key_offsets(key)
+    offsets.set_date_offsets(date)
   end
 
   def encrypt(message, key, date)
-    final_offset(key, date)
+    set_offsets(key, date)
     message_to_array = message.downcase.split('')
     message_to_array.map do |character|
-      if offsets_count = 0
-        character_set.find_index(character)
-        offsets_count += 1
-      elsif offsets_count = 1
+      if character_set.include?(character)
+        if @offsets_count == 0
+          @offsets_count += 1
+          start = character_set.find_index(character)
+          finish = @offsets.final_offsets[:offset_a]
+          character_set.rotate(start).rotate(finish)[0]
+        elsif @offsets_count == 1
+          @offsets_count += 1
+          start = character_set.find_index(character)
+          finish = @offsets.final_offsets[:offset_b]
+          character_set.rotate(start).rotate(finish)[0]
+        elsif @offsets_count == 2
+          @offsets_count += 1
+          start = character_set.find_index(character)
+          finish = @offsets.final_offsets[:offset_c]
+          character_set.rotate(start).rotate(finish)[0]
+        else @offsets_count == 3
+          @offsets_count = 0
+          start = character_set.find_index(character)
+          finish = @offsets.final_offsets[:offset_d]
+          character_set.rotate(start).rotate(finish)[0]
+        end
+      else
         character
-        offsets_count += 1
-      elsif offsets_count = 2
-        character
-        offsets_count += 1
-      else offsets_count = 3
-        character
-        @offsets_count = 0
       end
-    end
+    end.join
   end
 
   def decrypt(ciphertext, key, date)

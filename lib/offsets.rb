@@ -16,11 +16,14 @@ class Offsets
       :offset_c => (keys[:c_key] + date_offsets[:c_set]),
       :offset_d => (keys[:d_key] + date_offsets[:d_set])
     }
-    require "pry"; binding.pry
   end
 
-  def set_key_offsets
-    random_key = (1..9).to_a.shuffle.take(4).unshift(0)
+  def set_key_offsets(key)
+    if key = nil or " "
+      random_key = (1..9).to_a.shuffle.take(4).unshift(0)
+    else
+      random_key = key
+    end
     @keys = {
       :a_key => random_key[0].to_s.to_i + random_key[1].to_s.to_i,
       :b_key => (random_key[1].to_s.to_i * 10) + random_key[2].to_s.to_i,
@@ -29,9 +32,9 @@ class Offsets
     }
   end
 
-  def set_date_offsets
-    @date = Time.now.strftime("%d/%m/%y").to_s.delete("/").to_i
-    square_date = ((date ** 2).to_s.split('')).last(4)
+  def set_date_offsets(date)
+    # date = Time.now.strftime("%d/%m/%y").to_s.delete("/").to_i
+    square_date = ((date.to_i ** 2).to_s.split('')).last(4)
     @date_offsets = {
       :a_set => square_date[0].to_i,
       :b_set => square_date[1].to_i,
