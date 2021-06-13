@@ -19,9 +19,14 @@ describe Offsets do
   end
 
   it 'can set key offsets' do
-    @offset.set_key_offsets
-    @offset.set_date_offsets
+    @offset.set_key_offsets('02715')
+    @offset.set_date_offsets('040895')
     @offset.final_offsets
     expect(@offset.set_key_offsets).to eq(0)
+  end
+
+  it 'can encrypt' do
+    @offset.final_offsets
+    
   end
 end

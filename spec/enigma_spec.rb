@@ -1,6 +1,5 @@
 require 'spec_helper'
-require 'key'
-require 'date'
+require 'offsets'
 require 'enigma'
 
 describe Enigma do
@@ -16,10 +15,13 @@ describe Enigma do
   end
 
   it 'can get the date' do
-    @enigma.date.get_date
-    @enigma.date.date
   end
 
-  it 'can encrypt'
+  it 'can encrypt' do
+    new_encryption = @enigma.encrypt("hEllo woRld", '02715', '040895')
+    expect(new_encryption).to eq("keder ohulw")
+    require "pry"; binding.pry
+  end
+
   it 'decrypt'
 end
