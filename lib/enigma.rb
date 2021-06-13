@@ -3,7 +3,8 @@ require './modules/indexable'
 
 class Enigma
   include Indexable
-  attr_reader :message, :date, :key, :offsets
+  attr_reader :message, :date, :key, :offsets, :offsets_count
+  #may or may not need :message, :date, :key
 
   def initialize
     @key = @key
@@ -11,6 +12,10 @@ class Enigma
     @message = message
     @offsets = offsets
     @offsets_count = 0
+  end
+
+  def character_set
+    ("a".."z").to_a << " "
   end
 
   def set_offsets(key, date)
@@ -24,42 +29,27 @@ class Enigma
     message_to_array = message.downcase.split('')
     message_to_array.map do |character|
       if character_set.include?(character)
-        if @offsets_count == 0
-          scramble(1, :offset_a, character)
-          # @offsets_count += 1
-          # start = character_set.find_index(character)
-          # finish = @offsets.final_offsets[:offset_a]
-          # character_set.rotate(start).rotate(finish)[0]
-        elsif @offsets_count == 1
-          scramble(1, :offset_b, character)
-          # @offsets_count += 1
-          # start = character_set.find_index(character)
-          # finish = @offsets.final_offsets[:offset_b]
-          # character_set.rotate(start).rotate(finish)[0]
-        elsif @offsets_count == 2
-          scramble(1, :offset_c, character)
-          # @offsets_count += 1
-          # start = character_set.find_index(character)
-          # finish = @offsets.final_offsets[:offset_c]
-          # character_set.rotate(start).rotate(finish)[0]
-        else @offsets_count == 3
-          scramble(0, :offset_d, character)
-          # @offsets_count = 0
-          # start = character_set.find_index(character)
-          # finish = @offsets.final_offsets[:offset_d]
-          # character_set.rotate(start).rotate(finish)[0]
-        end
+        scrambling(character)
       else
         character
       end
     end.join
   end
 
-  def decrypt(ciphertext, key, date)
+  def scrambling(character)
+    if @offsets_count == 0
+      scramble(1, :offset_a, character)
+    elsif @offsets_count == 1
+      scramble(1, :offset_b, character)
+    elsif @offsets_count == 2
+      scramble(1, :offset_c, character)
+    else @offsets_count == 3
+      @offsets_count = 0
+      scramble(0, :offset_d, character)
+    end
   end
 
-  def character_set
-    ("a".."z").to_a << " "
+  def decrypt(ciphertext, key, date)
   end
 
   def user_input
@@ -68,3 +58,8 @@ class Enigma
     user_input
   end
 end
+
+# @offsets_count += 1
+# start = character_set.find_index(character)
+# finish = @offsets.final_offsets[:offset_a]
+# character_set.rotate(start).rotate(finish)[0]

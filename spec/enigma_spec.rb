@@ -12,16 +12,30 @@ describe Enigma do
   end
 
   it 'has attributes' do
+    # expect(@enigma.key).to eq(nil)
+    # expect(@enigma.date).to eq(nil)
+    # expect(@enigma.message).to eq(nil)
+    expect(@enigma.offsets).to eq(nil)
+    expect(@enigma.offsets_count).to eq(0)
   end
 
-  it 'can get the date' do
+  it 'has attibutes that can change' do
+    @enigma.encrypt("hi", '02715', '040895')
+    # expect(@enigma.key).to eq('02715')
+    # expect(@enigma.date).to eq('040895')
+    # expect(@enigma.message).to eq('hi')
+    expect(@enigma.offsets.class).to eq(Offsets)
+    expect(@enigma.offsets_count).to eq(2)
   end
 
   it 'can encrypt' do
-    new_encryption = @enigma.encrypt("hEllo woRld", '02715', '040895')
-    expect(new_encryption).to eq("keder ohulw")
-    require "pry"; binding.pry
+    new_encryption = @enigma.encrypt("hEllo woRld!", '02715', '040895')
+    expect(new_encryption).to eq("keder ohulw!")
   end
 
-  it 'decrypt'
+  xit 'decrypt' do
+    new_decryption = @enigma.encrypt("keder ohulw!", '02715', '040895')
+    expect(new_encryption).to eq("hello world!")
+  end
+
 end
