@@ -12,18 +12,12 @@ describe Enigma do
   end
 
   it 'has attributes' do
-    # expect(@enigma.key).to eq(nil)
-    # expect(@enigma.date).to eq(nil)
-    # expect(@enigma.message).to eq(nil)
     expect(@enigma.offsets).to eq(nil)
     expect(@enigma.offsets_count).to eq(0)
   end
 
   it 'has attibutes that can change' do
     @enigma.encrypt("hi", '02715', '040895')
-    # expect(@enigma.key).to eq('02715')
-    # expect(@enigma.date).to eq('040895')
-    # expect(@enigma.message).to eq('hi')
     expect(@enigma.offsets.class).to eq(Offsets)
     expect(@enigma.offsets_count).to eq(2)
   end
