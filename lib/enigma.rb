@@ -1,15 +1,11 @@
-require './lib/offsets'
-require './modules/indexable'
+require_relative 'offsets'
+require_relative './modules/indexable'
 
 class Enigma
   include Indexable
-  attr_reader :message, :date, :key, :offsets, :offsets_count
-  #may or may not need :message, :date, :key for user input
+  attr_reader :offsets, :offsets_count
 
   def initialize
-    @key = @key
-    @date = @date
-    @message = message
     @offsets = offsets
     @offsets_count = 0
   end
@@ -72,11 +68,5 @@ class Enigma
       @offsets_count = 0
       unscramble(0, :offset_d, character)
     end
-  end
-
-  def user_input
-    input = gets.chomp.downcase
-    puts input
-    user_input
   end
 end
