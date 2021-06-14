@@ -20,9 +20,9 @@ class Offsets
 
   def set_key_offsets(new_key)
     if new_key == nil or new_key.length != 5
-      key = (1..9).to_a.shuffle.take(4).unshift(0)
+      @key = (1..9).to_a.shuffle.take(4).unshift(0)
     else
-      key = new_key
+      @key = new_key
     end
     @keys = {
       :a_key => key[0].to_s.to_i + key[1].to_s.to_i,
@@ -34,9 +34,9 @@ class Offsets
 
   def set_date_offsets(new_date)
     if new_date == nil or new_date.length != 6
-      date = Time.now.strftime("%d/%m/%y").to_s.delete("/").to_i
+      @date = Time.now.strftime("%d/%m/%y").to_s.delete("/").to_i
     else
-      date = new_date
+      @date = new_date
     end
     square_date = ((date.to_i ** 2).to_s.split('')).last(4)
     @date_offsets = {
