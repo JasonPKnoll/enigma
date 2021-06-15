@@ -38,7 +38,7 @@ class Offsets
     else
       @date = new_date
     end
-    square_date = ((date.to_i ** 2).to_s.split('')).last(4)
+    square_date = ((@date.to_i ** 2).to_s.split('')).last(4)
     @date_offsets = {
       :a_set => square_date[0].to_i,
       :b_set => square_date[1].to_i,

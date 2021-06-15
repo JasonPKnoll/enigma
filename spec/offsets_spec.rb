@@ -36,4 +36,16 @@ describe Offsets do
                                           :offset_d=>20
                                           })
   end
+
+  it 'can return current date when no date is given' do
+    @offset1.set_date_offsets('')
+    expect(@offset1.date).to eq(Time.now.strftime("%d/%m/%y").to_s.delete("/").to_i)
+  end
+
+
+  it 'can generate a random number' do
+    @offset1.set_key_offsets('')
+    expect(@offset1.key.length).to eq(5)
+    expect(@offset1.key[0]).to eq(0)
+  end
 end
