@@ -38,8 +38,10 @@ describe Offsets do
   end
 
   it 'can return current date when no date is given' do
+    allow(Time).to receive(:now) {DateTime.new(1999,01,11)}
     @offset1.set_date_offsets('')
-    expect(@offset1.date).to eq(Time.now.strftime("%d/%m/%y").to_s.delete("/").to_i)
+    expect(@offset1.date).to eq(110199)
+    # expect(@offset1.date).to eq(Time.now.strftime("%d/%m/%y").to_s.delete("/").to_i)
   end
 
 
@@ -47,5 +49,13 @@ describe Offsets do
     @offset1.set_key_offsets('')
     expect(@offset1.key.length).to eq(5)
     expect(@offset1.key[0]).to eq(0)
+    allow(@offset1).to receive(:key).and_return('01234')
+    @offset1.set_key_offsets('')
+    expect(@offset1.keys).to eq({
+                                :a_key=>1,
+                                :b_key=>12,
+                                :c_key=>23,
+                                :d_key=>34
+                                })
   end
 end
